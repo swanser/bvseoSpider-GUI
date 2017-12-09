@@ -103,12 +103,17 @@ class bvSEOFrame(tkinter.Frame):
                 bestRating = eachReview.findAll('span', {'itemprop':'bestRating'})
                 pubDate = eachReview.findAll('div', {'class':'bvseo-pubdate'})
                 name = eachReview.findAll('span', {'itemprop':'name'})
+                
                 description = eachReview.findAll('span', {'itemprop':'description'})
+                
 
                 tempReview.append(int(rating[0].text))
                 tempReview.append(int(bestRating[0].text))
                 tempReview.append(str(pubDate[0].text))
-                tempReview.append(str(name[0].text))
+                if str(name[0].text) == '':
+                    tempReview.append('No Name')
+                else:
+                    tempReview.append(str(name[0].text))
                 tempReview.append(str(description[0].text))
 
                 self.detectedReviews.append(tempReview)
