@@ -1,5 +1,7 @@
 # bvseoSpider-GUI
 v0.01F
+
+
 GUI Application for scraping certain webpages using the bvseo schema for customer review analysis
 (C)2017 Stephen M. Wanser
 
