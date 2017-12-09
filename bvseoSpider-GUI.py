@@ -9,14 +9,11 @@ class bvSEOFrame(tkinter.Frame):
     def __init__(self, parent):
 
         tkinter.Frame.__init__(self, parent)
-
-
         self.generateWidgets()
         
 
     def generateWidgets(self):
 
-        
         #Target Frame
         self.targetFrame = tkinter.Frame(self, bd = 2, relief = 'sunken')
         self.targetFrame.targetLabel = tkinter.Label(self.targetFrame, text = 'Target:')
@@ -26,7 +23,6 @@ class bvSEOFrame(tkinter.Frame):
         self.targetFrame.targetLabel.grid(row = 0, column = 0)
         self.targetFrame.targetEntry.grid(row = 0, column = 1)
         self.targetFrame.targetSubmitButton.grid(row = 0, column = 2)
-        
 
         #Target Detail Frame
         self.targetDetailFrame = tkinter.LabelFrame(self, bd = 2, relief = 'sunken', text = 'Target Detail:')
@@ -36,7 +32,6 @@ class bvSEOFrame(tkinter.Frame):
         self.targetDetailFrame.productDetectedLabel.grid(row = 0, column = 0)
         self.targetDetailFrame.productDetectedDisplay.grid(row = 0, column = 1)
         
-
         #Review List Frame
         self.reviewListFrame = tkinter.LabelFrame(self, bd = 2, relief = 'sunken', text = 'Reviews:')
         self.reviewListFrame.reviewList = tkinter.Listbox(self.reviewListFrame, width = 91, height = 8)
@@ -52,14 +47,12 @@ class bvSEOFrame(tkinter.Frame):
         self.reviewDetailFrame.pubDateDisplay = tkinter.Label(self.reviewDetailFrame, textvariable = self.reviewDetailFrame.pubDateVariable)
         self.reviewDetailFrame.pubDateDisplay.grid(row = 0, column = 0, sticky = 'w')
         
-
         self.reviewDetailFrame.ratingLabel = tkinter.Label(self.reviewDetailFrame, text = 'Rating:')
         self.reviewDetailFrame.ratingVariable = tkinter.StringVar()
         self.reviewDetailFrame.ratingDisplay = tkinter.Label(self.reviewDetailFrame, textvariable = self.reviewDetailFrame.ratingVariable)
         self.reviewDetailFrame.ratingLabel.grid(row = 1, column = 0, sticky = 'e')
         self.reviewDetailFrame.ratingDisplay.grid(row = 1, column = 1, sticky = 'w')
         
-
         self.reviewDetailFrame.fullReviewLabel = tkinter.Label(self.reviewDetailFrame, text = 'Full Review Text:')
         self.reviewDetailFrame.fullReviewText = tkinter.Text(self.reviewDetailFrame, width = 80, height = 20)
         self.reviewDetailFrame.fullReviewLabel.grid(row = 2, column = 0, sticky = 'e')
@@ -71,8 +64,7 @@ class bvSEOFrame(tkinter.Frame):
         self.reviewListFrame.grid(row = 2, column = 0, sticky = 'we')
         self.reviewDetailFrame.grid(row = 3, column = 0, sticky = 'we')
 
-
-        self.grid(row = 0, column = 0)
+        self.pack()
 
 
     def scrape(self):
@@ -96,14 +88,9 @@ class bvSEOFrame(tkinter.Frame):
             self.targetSoup = bs4.BeautifulSoup(self.targetPage.text, 'html.parser')
             
             #Parse bvseo-review format data into dictionary
-
             self.targetProductString = self.targetSoup.findAll({'meta' : 'content'})
-            
             self.reviews = self.targetSoup.findAll('div', {'class':'bvseo-review'})
-            
-            
-            specificTarget = bs4.BeautifulSoup(self.reviews[0].text, 'html.parser')
-            
+                     
             #master list of detected reviews of target with text values of corresponding tags parsed
             self.detectedReviews = []
         
@@ -150,7 +137,10 @@ class bvSEOFrame(tkinter.Frame):
             
 
 
-newApp = tkinter.Tk()
-newApp.title('bvseoSpider-GUI: Customer Review Scraper v0.01F')
+#Create, configure and launch application window
+if __name__ == '__main__':
+    
+    newApp = tkinter.Tk()
+    newApp.title('bvseoSpider-GUI: Customer Review Scraper v0.01F')
 
-bvSEOFrame(newApp)
+    bvSEOFrame(newApp)
