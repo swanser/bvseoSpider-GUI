@@ -1,5 +1,5 @@
 # bvseoSpider-GUI
-v0.01F
+v0.02A
 
 
 GUI Application for scraping certain webpages using the bvseo schema for customer review analysis
@@ -11,4 +11,6 @@ Enter the URL of the target web page to be scraped and click Launch. The applica
 Future Feature Plans:
 sqlite3 database storage/retrieval, recursive domain-level crawling for products, product/brand monitoring and alerting for new reviews, sentiment analysis
 
+v0.02A
+Added Combobox (Drop-down style menu) persistence for successfully scraped pages for duration of the execution of the program
 
