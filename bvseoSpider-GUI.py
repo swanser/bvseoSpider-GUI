@@ -1,8 +1,9 @@
-#bvseoSpider-GUI v0.01F
+#bvseoSpider-GUI v0.02A
 #SMW
 
 import tkinter, requests, bs4
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, ttk
+
 
 class bvSEOFrame(tkinter.Frame):
 
@@ -18,7 +19,7 @@ class bvSEOFrame(tkinter.Frame):
         self.targetFrame = tkinter.Frame(self, bd = 2, relief = 'sunken')
         self.targetFrame.targetLabel = tkinter.Label(self.targetFrame, text = 'Target:')
         self.targetFrame.targetVariable = tkinter.StringVar()
-        self.targetFrame.targetEntry = tkinter.Entry(self.targetFrame, textvariable = self.targetFrame.targetVariable, width = 76)
+        self.targetFrame.targetEntry = ttk.Combobox(self.targetFrame, textvariable = self.targetFrame.targetVariable, width = 76)
         self.targetFrame.targetSubmitButton = tkinter.Button(self.targetFrame, text = 'Launch!', command = self.scrape)
         self.targetFrame.targetLabel.grid(row = 0, column = 0)
         self.targetFrame.targetEntry.grid(row = 0, column = 1)
@@ -123,6 +124,19 @@ class bvSEOFrame(tkinter.Frame):
             #Set product name in targetDetailFrame
             productName = self.reviews[0].findAll('meta', {'itemprop':'itemReviewed'})
             self.targetDetailFrame.productDetectedVariable.set(str(productName[0]['content']))
+
+            #Add successfully scrapped URL to Combobox
+            if (len(self.targetFrame.targetEntry['values'])) == 0 and (self.targetURL in self.targetFrame.targetEntry['values']) == False:
+                startList = []
+                startList.append(self.targetURL)
+                self.targetFrame.targetEntry['values'] = startList
+            elif (self.targetURL in self.targetFrame.targetEntry['values']) == False:
+                tempList = self.targetFrame.targetEntry['values']
+                print(tempList)
+                tempTup = self.targetURL,
+                tempList = tempList + tempTup
+                self.targetFrame.targetEntry['values'] = tempList
+            
    
         except Exception as e:
             #Error Catch in case request from server fails
@@ -133,6 +147,7 @@ class bvSEOFrame(tkinter.Frame):
     def updateReviewDetail(self, e):
 
         #Determine Selectoin and update reviewDetailFrame with selected review's data
+        if self.reviewListFrame.reviewList.size() == 0: return
         self.highlightedReview = self.reviewListFrame.reviewList.curselection()
         self.reviewDetailFrame.pubDateVariable.set(self.detectedReviews[self.highlightedReview[0]][2])
         ratingString = str(self.detectedReviews[self.highlightedReview[0]][0]) + ' / ' + str(self.detectedReviews[self.highlightedReview[0]][1])
@@ -146,6 +161,6 @@ class bvSEOFrame(tkinter.Frame):
 if __name__ == '__main__':
     
     newApp = tkinter.Tk()
-    newApp.title('bvseoSpider-GUI: Customer Review Scraper v0.01F')
+    newApp.title('bvseoSpider-GUI: Customer Review Scraper v0.02A')
 
     bvSEOFrame(newApp)
