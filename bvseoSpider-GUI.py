@@ -132,7 +132,6 @@ class bvSEOFrame(tkinter.Frame):
                 self.targetFrame.targetEntry['values'] = startList
             elif (self.targetURL in self.targetFrame.targetEntry['values']) == False:
                 tempList = self.targetFrame.targetEntry['values']
-                print(tempList)
                 tempTup = self.targetURL,
                 tempList = tempList + tempTup
                 self.targetFrame.targetEntry['values'] = tempList
